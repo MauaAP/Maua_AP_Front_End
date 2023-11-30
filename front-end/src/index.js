@@ -38,6 +38,9 @@ const router = createBrowserRouter([
           usarName: formData.get("userName"),
           userPassword: formData.get("userPassword")
         }
+      }).then((response) => {
+        console.log('Recebendo a resposta do action /main')
+        console.log(response)
       })
       return formData
     },
