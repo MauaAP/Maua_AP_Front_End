@@ -30,24 +30,34 @@ const router = createBrowserRouter([
       // const axios = require('axios');
       let formData = await request.formData();
       console.log('no index, action do /main');
-      console.log(formData.keys())
-      console.log(formData.get("userName"));
-      axios.post("http://localhost:1000/", {
-        type: "login",
+      // console.log(formData.keys())
+      // console.log(formData.get("userName"));
+      let res = axios.get("http://localhost:1000/", {
+        type: "action",
         payload: {
           usarName: formData.get("userName"),
           userPassword: formData.get("userPassword")
         }
       }).then((response) => {
-        console.log('Recebendo a resposta do action /main')
-        console.log(response)
+        // console.log('Recebendo a resposta do action /main')
+        // console.log(response)
+        return response
       })
-      return formData
+      return res
     },
     loader: ({params}) => {
       console.log('no index, loader do /main')
-      console.log(params)
-      return params
+      // console.log(params)
+      let res = axios.get("http://localhost:1000/", {
+        type: "loader",
+        payload: {
+          msg: "Request do loader"
+        }
+      }).then((response) => {
+        return response
+      })
+      return res
+      // return 'dados do loader do /main no index.'
     },
 
     
