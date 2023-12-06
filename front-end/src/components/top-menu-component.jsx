@@ -10,14 +10,13 @@ export default function TopMenu ({info}) {
     // console.log(state)
 
     return(
-        <>
-        <div>
-            <p>Foto</p>
-            <p>{info["userName"]}</p>
-            {info["isAdmin"] ? <p>(Admin)</p> : <></>}
-            <p>Abrir menu lateral</p>
-            <Link to={`/`}>Logout</Link>
-        </div>
-        </>
+        <nav className="navbar navbar-expand rounded-5 rounded-top-0 " style={{"height": "80px", 'background': "#0c1e46"}}>
+                <img className="rounded-circle m-2 p-2" style={{"height": "80px"}} src="https://th.bing.com/th/id/R.494014c1479a1d770af09de8f952ca85?rik=yET%2fgVZTOu9kJw&riu=http%3a%2f%2fwww.newdesignfile.com%2fpostpic%2f2013%2f01%2fgeneric-user-icon-windows_321380.png&ehk=6YmE90QJGnIzBGX40xBluW5kdj9g%2fjNgw3YailPgCAE%3d&risl=&pid=ImgRaw&r=0&sres=1&sresct=1" alt="Sem Imagem" />
+                <p className="text-light h-25 fs-3 fw-bolder" >{info["userName"]}</p>
+
+               
+
+                <Link to={`/`}>Logout</Link>
+        </nav>
     )
 }
