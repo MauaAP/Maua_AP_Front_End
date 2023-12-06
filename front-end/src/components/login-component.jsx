@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { ReactDOM } from 'react'
 import { createBrowserRouter, RouterProvider, Form, Link } from "react-router-dom";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 // import LoginUser from '../fake-back-end/login-functions'
 
@@ -55,17 +56,24 @@ export default function LoginBox() {
     };
 
     return(
-        <Form action='/main' method="post" state={userInfo} >
-        {/* <Form action='/main' method="post"  > */}
-            {/* <label htmlFor="user-name-input">Nome do usuário:</label> */}
-            <p>Nome do usuário:</p>
-            <input id="user-name-input" type="text" name="userName" placeholder="Nome" onChange={onChange} required />
-            <hr />
-            {/* <label htmlFor="user-password-input">Senha do usuário:</label> */}
-            <p>Senha do usuário:</p>
-            <input id="user-password-input" type="password" name="userPassword" placeholder="Senha" onChange={onChange} required />
-            <hr />
-            <button type="submit" onClick={onClick}>Login</button>
-        </Form>
+        <div className="card rounded-5" style={{"width": "20rem"}}>
+            <Form action='/main' method="post" state={userInfo} >
+            {/* <Form action='/main' method="post"  > */}
+                <div className="card-body" clearfix='true'>
+                    <h1 className="card-title text-center">Portal do Professor</h1>
+                    <div className="form-floating mb-3">
+                        <input className="form-control rounded-pill bg-secondary-subtle border-secondary-subtle focus-ring focus-ring-secondary fs-4" id="user-name-input" type="email" name="userName" placeholder="e-mail" onChange={onChange} required />
+                        <label htmlFor="user-name-input"  htmlFor="user-name-input">e-mail</label>
+                    </div>
+                    <div className="form-floating mb-3">
+                        <input id="user-password-input" type="password" name="userPassword" className="form-control rounded-pill bg-secondary-subtle border-secondary-subtle focus-ring focus-ring-secondary" placeholder="senha" onChange={onChange} required />
+                        <label htmlFor="user-password-input" htmlFor="user-password-input">senha</label>
+                    </div>
+
+
+                    <button type="submit" className="btn btn-primary position-relative bottom-0 start-50 translate-middle-x fw-bold" onClick={onClick}>Login</button>
+                </div>
+            </Form>
+        </div>
     )
 };
