@@ -12,6 +12,7 @@ import Login from "./pages/login-page";
 import Certificates from "./pages/certificates-page"
 import ErrorPage from "./pages/error-page"
 import ViewPage from "./pages/view-page"
+import InfoPage from "./pages/info-page";
 
 import WIP from "./pages/wip-page"
 
@@ -74,7 +75,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: "user-data",
-        element: <User/>
+        element: <InfoPage/>
       },
       {
         path: "certificates",

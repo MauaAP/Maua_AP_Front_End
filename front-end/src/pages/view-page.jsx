@@ -5,6 +5,7 @@ import { createBrowserRouter, RouterProvider, Form, Link } from "react-router-do
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
+// https://reactrouter.com/en/main/components/await 
 
 
 export default function ViewPage(){
