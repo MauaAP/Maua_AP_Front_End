@@ -17,6 +17,7 @@ export default function ViewPage(props){
 
 
     const [listaUsuarios, setListaUsuarios] = useState(dadosLoader.data);
+    const [listaSelecionados, setListaSelecionados] = useState([]);
 
     const TableHead = ({data}) => {
 
@@ -56,7 +57,7 @@ export default function ViewPage(props){
 
             colunas.push(
                 <td className="text-center" key={`checkboxId${indexUser}`}>
-                    <input className="form-check-input" type="checkbox" id={`checkboxId${indexUser}`} value={`${user.cpf}`} aria-label="..."></input>
+                    <input className="form-check-input" onChange={onCheckboxChange} type="checkbox" id={`checkboxId${indexUser}`} value={`${user.cpf}`} aria-label="..."></input>
                 </td>
             )
 
@@ -66,23 +67,29 @@ export default function ViewPage(props){
         return conteudoTabela
     }
 
-    function onCheckChange (cpf) {
-        let usuarioSelecionado = listaUsuarios.find((obj) => obj.cpf === cpf)
-        let idxUsuarioSelecionado = listaUsuarios.indexOf(usuarioSelecionado);
-        console.log(idxUsuarioSelecionado)
-        usuarioSelecionado.selecionado = !usuarioSelecionado.selecionado
-        let novaListaUsuarios = listaUsuarios
-        novaListaUsuarios[idxUsuarioSelecionado] = usuarioSelecionado
-        console.log(novaListaUsuarios)
-        setListaUsuarios(novaListaUsuarios)
+    function onCheckboxChange (event) {
+        // console.log('Checkbox selecionada.')
+        let novaListaSelecionados = listaSelecionados
+        if (event.target.checked) {
+            novaListaSelecionados.push(event.target.value)
+            setListaSelecionados(novaListaSelecionados)
+        } else {
+            let idxRetirar = novaListaSelecionados.indexOf(event.target.value)
+            novaListaSelecionados.splice(idxRetirar, 1)
+            setListaSelecionados(novaListaSelecionados)
+        }
     }
 
     function onButtonClick () {
 
-        let selecionados = listaUsuarios.filter((obj) => obj.selecionado === true)
-        // const result = words.filter((word) => word.length > 6);
+        let listaInfo = []
 
-        console.log(selecionados)
+        listaSelecionados.forEach((cpf) => {
+            let info = listaUsuarios.find((userInfo) => userInfo.cpf === cpf)
+            listaInfo.push(info)
+        })
+
+        console.log(listaInfo)
     }
 
 
