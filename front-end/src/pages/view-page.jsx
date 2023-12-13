@@ -25,8 +25,9 @@ export default function ViewPage(props){
         let idx = colunas.findIndex((coluna) => coluna === 'senha');
         if (idx > -1) { 
             colunas.splice(idx, 1);
-        } else {
         }
+
+        colunas.push('Selecionar')
 
         let ret = colunas.map((coluna, index) => 
             <th key={`coluna${index}`}>{coluna}</th >
@@ -52,6 +53,12 @@ export default function ViewPage(props){
             let colunas = userDataValues.map((value, indexValue) => {
                 return <td key={`row${indexUser}column${indexValue}`}>{value.toString()}</td>
             })
+
+            colunas.push(
+                <td className="text-center" key={`checkboxId${indexUser}`}>
+                    <input className="form-check-input" type="checkbox" id={`checkboxId${indexUser}`} value={`${user.cpf}`} aria-label="..."></input>
+                </td>
+            )
 
             return <tr key={`row${indexUser}`}>{colunas}</tr>
         })
