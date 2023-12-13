@@ -1,48 +1,103 @@
-import React, { StrictMode } from "react";
+import React, { StrictMode, useState } from "react";
 import { createRoot } from "react-dom/client";
 import { ReactDOM } from 'react'
-import { createBrowserRouter, RouterProvider, Form, Link } from "react-router-dom";
+import { createBrowserRouter, RouterProvider, Form, Link, useLoaderData} from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 // https://reactrouter.com/en/main/components/await 
 
 
-export default function ViewPage(){
+export default function ViewPage(props){
+
+
+    const dadosLoader = useLoaderData()
+    // console.log(`\nDados do loader, com relação ao view do usuário:\n${dadosLoader.data}\n`)
+    // console.log(dadosLoader.data)
+
+
+    const [listaUsuarios, setListaUsuarios] = useState(dadosLoader.data);
+
+    const TableHead = ({data}) => {
+
+        let colunas = Object.getOwnPropertyNames(data)
+
+        let idx = colunas.findIndex((coluna) => coluna === 'senha');
+        if (idx > -1) { 
+            colunas.splice(idx, 1);
+        } else {
+        }
+
+        let ret = colunas.map((coluna, index) => 
+            <th key={`coluna${index}`}>{coluna}</th >
+        )
+
+        return ret
+    }
+
+
+    const TableRow = ({usuarios}) => {
+        // array com objetos, sendo cada um usuario e as informações do usuário
+
+        let conteudoTabela = usuarios.map((user, indexUser) => {
+            // Pegando os objetos usuarios um por um
+
+            // Apaga a senha se tiver
+            delete user['senha']
+
+            // Pegando apenas os valores
+            let userDataValues = Object.values(user)
+
+            // Vou retornar colunas
+            let colunas = userDataValues.map((value, indexValue) => {
+                return <td key={`row${indexUser}column${indexValue}`}>{value.toString()}</td>
+            })
+
+            return <tr key={`row${indexUser}`}>{colunas}</tr>
+        })
+
+        return conteudoTabela
+    }
+
+    function onCheckChange (cpf) {
+        let usuarioSelecionado = listaUsuarios.find((obj) => obj.cpf === cpf)
+        let idxUsuarioSelecionado = listaUsuarios.indexOf(usuarioSelecionado);
+        console.log(idxUsuarioSelecionado)
+        usuarioSelecionado.selecionado = !usuarioSelecionado.selecionado
+        let novaListaUsuarios = listaUsuarios
+        novaListaUsuarios[idxUsuarioSelecionado] = usuarioSelecionado
+        console.log(novaListaUsuarios)
+        setListaUsuarios(novaListaUsuarios)
+    }
+
+    function onButtonClick () {
+
+        let selecionados = listaUsuarios.filter((obj) => obj.selecionado === true)
+        // const result = words.filter((word) => word.length > 6);
+
+        console.log(selecionados)
+    }
+
+
     return ( 
         <div className="container-fluid">
-            <h1 className="fs-1" >Usuários</h1>
-            <div className="container" style={{"background": "#d9d9d9"}} >
-                <div className="vstack gap-0" style={{"background": "#d9d9d9"}}>
-                    <div className="row m-1 mt-2" style={{"background": "#ffffff"}} >
-                        <div className="col-6 m-2 fw-bold" >Nome</div>
-                        <div className="col   m-2 fw-bold" >CPF</div>
-                        <div className="col   m-2 fw-bold text-center" >Selecionado</div>
-                    </div>
+            {/* <h1 className="fs-1" >Usuários</h1> */}
+            <h1 className="fs-1" >{props.secao}</h1>
+            <div className="container overflow-x-scroll" style={{"background": "#d9d9d9"}} >
+                
+                <table className="table" style={{"width": "1000px"}}>
+                    <thead>
+                        <tr>
+                            <TableHead data={listaUsuarios[0]} />
+                        </tr>
+                    </thead>
+                    <tbody>  
+                        <TableRow usuarios={listaUsuarios} />
+                    </tbody>
+                </table>
 
-                    <div className="row m-1" style={{"background": "#ffffff"}} >
-                        <div className="col-6 m-2" >Gustavo</div>
-                        <div className="col   m-2" >123.456.789-00</div>
-                        <div className="col   m-2  " >
-                            {/* <div className="form-check " >
-                                <input className="form-check-input" type="checkbox" value="" id="checkbox01" />
-                            </div> */}
-                            <input className="form-check-input position-relative start-50 top-50 translate-middle" type="checkbox" id="checkboxNoLabel" value="" aria-label="..."/>
-                        </div>
-                    </div>
 
-                    <div className="row m-1" style={{"background": "#ffffff"}} >
-                        <div className="col-6 m-2" >Gustavo</div>
-                        <div className="col   m-2" >123.456.789-00</div>
-                        <div className="col   m-2  " >
-                            {/* <div className="form-check " >
-                                <input className="form-check-input" type="checkbox" value="" id="checkbox01" />
-                            </div> */}
-                            <input className="form-check-input position-relative start-50 top-50 translate-middle" type="checkbox" id="checkboxNoLabel" value="" aria-label="..."/>
-                        </div>
-                    </div>
 
-                </div>
             </div>
             <div className="container position-relative">
                 <nav className="position-absolute start-0 end-50 m-3 " aria-label="Page navigation">
@@ -67,7 +122,7 @@ export default function ViewPage(){
                         </li>
                     </ul>
                 </nav>
-                <button className="btn btn-primary btn-lg m-3 position-absolute top-0 end-0" type="button" >Baixar</button>
+                <button className="btn btn-primary btn-lg m-3 position-absolute top-0 end-0" type="button" onClick={onButtonClick} >Baixar</button>
             </div>
         </div>
     )

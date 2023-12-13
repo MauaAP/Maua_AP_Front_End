@@ -32,83 +32,94 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage/>,
 
 
-    action: async ({params, request}) => {
-      // const axios = require('axios');
-      let formData = await request.formData();
-      console.log('no index, action do /main (executando o action)');
-      console.log(formData.get("userName"));
-      let res = axios.get("http://localhost:1000/", {
-        type: "action",
-        payload: {
-          usarName: formData.get("userName"),
-          userPassword: formData.get("userPassword")
-        }
-      }).then((response) => {
-        // console.log('Recebendo a resposta do action /main')
-        // console.log(response)
-        return response
-      })
-      return res
-    },
+    // action: async ({params, request}) => {
+    //   // const axios = require('axios');
+    //   let formData = await request.formData();
+    //   console.log('no index, action do /main (executando o action)');
+    //   console.log(formData.get("userName"));
+    //   let res = axios.get("http://localhost:1000/", {
+    //     type: "action",
+    //     payload: {
+    //       usarName: formData.get("userName"),
+    //       userPassword: formData.get("userPassword")
+    //     }
+    //   }).then((response) => {
+    //     // console.log('Recebendo a resposta do action /main')
+    //     // console.log(response)
+    //     return response
+    //   })
+    //   return res
+    // },
+
+
     // action: async ({params, request}) => {
     //   let formData = await request.formData();
     //   let userName = formData.get("userName");
     //   return userName;
     // },
-    loader: ({params}) => {
-      console.log('no index, loader do /main (executando o loader)')
-      // console.log(params)
-      let res = axios.get("http://localhost:1000/", {
-        type: "loader",
-        payload: {
-          msg: "Request do loader"
-        }
-      }).then((response) => {
-        return response
-      })
-      console.log(res)
-      return res
-      // return 'dados do loader do /main no index.'
-    },
+
+    
+    // loader: ({params}) => {
+    //   console.log('no index, loader do /main (executando o loader)')
+    //   // console.log(params)
+    //   let res = axios.get("http://localhost:1000/", {
+    //     type: "loader",
+    //     payload: {
+    //       msg: "Request do loader"
+    //     }
+    //   }).then((response) => {
+    //     return response
+    //   })
+    //   console.log(res)
+    //   return res
+    //   // return 'dados do loader do /main no index.'
+    // },
 
     
     children: [
-      {
-        path: "user-data",
-        element: <InfoPage/>
-      },
-      {
-        path: "certificates",
-        element: <Certificates />
-      },
+      // {
+      //   path: "user-data",
+      //   element: <InfoPage/>
+      // },
+      // {
+      //   path: "certificates",
+      //   element: <Certificates />
+      // },
       {
         path: "usuarios",
         children: [
           {
             path: "visualizar",
-            element: <ViewPage />
+            element: <ViewPage secao="Usuários" />,
+            loader: async () => {
+              console.log(`Executando loader do view para usuários.`)
+              let res = await axios.get(`http://localhost:1000/users`).then(
+                (response) => {return response}
+              )
+              console.log(`\nNo index, res:\n${res}\n`)
+              return res
+            }
           },
           {
             path: "adicionar",
-            element: <WIP page="usuarios/adicionar" />
+            element: <InfoPage create={true} />
           },
           {
             path: "remover",
-            element: <WIP page="usuarios/remover" />
+            element: <InfoPage delete={true} />
           },
           {
             path: "atualizar",
-            element: <WIP page="usuarios/atualizar" />
+            element: <InfoPage update={true} />
           }
         ]
       },
       {
         path: "eventos",
-        element: <WIP page="eventos" />,
         children: [
           {
             path: "visualizar",
-            element: <WIP page="eventos/visualizar" />
+            element: <ViewPage secao="Eventos" />
           },
           {
             path: "adicionar",
@@ -126,7 +137,7 @@ const router = createBrowserRouter([
       },
     ],
   },
-  
+
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(

@@ -36,10 +36,10 @@ export default function SideMenu(){
     return (
         <div>
             <h3>MENU</h3>
-            <ul>
+            {/* <ul>
                 <li><Link to={`/main/user-data`}>Visualizar perfil</Link></li>
                 <li><Link to={`/main/certificates`}>Visualizar certificados</Link></li>
-            </ul>
+            </ul> */}
             {/* {info["isAdmin"] ? adminMenu : <></>} */}
             <br />
             <h3>Usuários</h3>

@@ -57,8 +57,9 @@ export default function LoginBox() {
 
     return(
         <div className="card rounded-5" style={{"width": "20rem"}}>
-            <Form action='/main' method="post" state={userInfo} >
+            {/* <Form action='/main' method="post" state={userInfo} > */}
             {/* <Form action='/main' method="post"  > */}
+            <Form action="/main">
                 <div className="card-body" clearfix='true'>
                     <h1 className="card-title text-center">Portal do Professor</h1>
                     <div className="form-floating mb-3">
