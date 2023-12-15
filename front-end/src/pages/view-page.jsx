@@ -99,7 +99,7 @@ export default function ViewPage(props){
             <h1 className="fs-1" >{props.secao}</h1>
             <div className="container overflow-x-scroll" style={{"background": "#d9d9d9"}} >
                 
-                <table className="table" style={{"width": "1000px"}}>
+                <table className="table my-2" style={{"width": "1000px"}}>
                     <thead>
                         <tr>
                             <TableHead data={listaUsuarios[0]} />
@@ -114,8 +114,7 @@ export default function ViewPage(props){
 
             </div>
             <div className="container position-relative">
-                <nav className="position-absolute start-0 end-50 m-3 " aria-label="Page navigation">
-                    {/*  */}
+                {/* <nav className="position-absolute start-0 end-50 m-3 " aria-label="Page navigation">
                     <ul className="pagination">
                         <li className="page-item disabled">
                             <button className="page-link"><span aria-hidden="true">&laquo;</span></button>
@@ -135,7 +134,7 @@ export default function ViewPage(props){
                             <button className="page-link"><span aria-hidden="true">&raquo;</span></button>
                         </li>
                     </ul>
-                </nav>
+                </nav> */}
                 <button className="btn btn-primary btn-lg m-3 position-absolute top-0 end-0" type="button" onClick={onButtonClick} >Baixar</button>
             </div>
         </div>

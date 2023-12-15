@@ -102,15 +102,15 @@ const router = createBrowserRouter([
           },
           {
             path: "adicionar",
-            element: <InfoPage create={true} />
+            element: <InfoPage create={true} target="usuario" />
           },
           {
             path: "remover",
-            element: <InfoPage delete={true} />
+            element: <InfoPage delete={true} target="usuario" />
           },
           {
             path: "atualizar",
-            element: <InfoPage update={true} />
+            element: <InfoPage update={true} target="usuario" />
           }
         ]
       },
