@@ -34,7 +34,7 @@ export default function MainPage(){
     return (
         <div>
             <TopMenu ></TopMenu>
-            <SideMenu ></SideMenu>
+            {/* <SideMenu ></SideMenu> */}
             <Outlet />
         </div>
     )

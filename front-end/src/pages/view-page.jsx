@@ -1,7 +1,8 @@
-import React, { StrictMode, useState } from "react";
+import React, { StrictMode, useState, useEffect } from "react";
 import { createRoot } from "react-dom/client";
 import { ReactDOM } from 'react'
-import { createBrowserRouter, RouterProvider, Form, Link, useLoaderData} from "react-router-dom";
+import { createBrowserRouter, RouterProvider, Form, Link, useLoaderData, useFetcher, useLocation } from "react-router-dom";
+import axios from "axios";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
@@ -10,14 +11,34 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 export default function ViewPage(props){
 
-
-    const dadosLoader = useLoaderData()
     // console.log(`\nDados do loader, com relação ao view do usuário:\n${dadosLoader.data}\n`)
     // console.log(dadosLoader.data)
-
-
+    
+    const dadosLoader = useLoaderData()
+    
     const [listaUsuarios, setListaUsuarios] = useState(dadosLoader.data);
     const [listaSelecionados, setListaSelecionados] = useState([]);
+    
+    
+
+    // const fetcher = useFetcher();
+    const location = useLocation();
+
+    useEffect(() => {
+        // location.load(props.path);
+        // console.log('qualquercoisa')
+        const x = (props.secao === 'Usuários') ? 'users' : "events"
+        let res = axios.get(`http://localhost:1000/${x}`).then(
+            (response) => {
+                console.log(response)
+                setListaUsuarios(response.data)
+            }
+        )
+        
+      }, [location]);
+
+
+
 
     const TableHead = ({data}) => {
 
@@ -91,6 +112,28 @@ export default function ViewPage(props){
 
         console.log(listaInfo)
     }
+
+    // function onButtonClick2 () {
+
+    //     let listaInfo = []
+
+    //     if (props.secao === 'Eventos') {
+    //         //
+    //         listaSelecionados.forEach((cpf) => {
+    //             let info = listaUsuarios.find((userInfo) => userInfo.id === cpf)
+    //             listaInfo.push(info)
+    //         })
+    //     } else {
+    //         //
+    //         listaSelecionados.forEach((cpf) => {
+    //             let info = listaUsuarios.find((userInfo) => userInfo.cpf === cpf)
+    //             listaInfo.push(info)
+    //         })
+    //     }
+
+
+    //     console.log(listaInfo)
+    // }
 
 
     return ( 

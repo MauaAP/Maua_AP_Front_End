@@ -12,7 +12,8 @@ import Login from "./pages/login-page";
 import Certificates from "./pages/certificates-page"
 import ErrorPage from "./pages/error-page"
 import ViewPage from "./pages/view-page"
-import InfoPage from "./pages/info-page";
+import UserInfoPage from "./pages/userinfo-page";
+import EventInfoPage from "./pages/eventinfo-page";
 
 import WIP from "./pages/wip-page"
 
@@ -90,7 +91,7 @@ const router = createBrowserRouter([
         children: [
           {
             path: "visualizar",
-            element: <ViewPage secao="Usuários" />,
+            element: <ViewPage secao="Usuários" path='/main/usuarios/visualizar'/>,
             loader: async () => {
               console.log(`Executando loader do view para usuários.`)
               let res = await axios.get(`http://localhost:1000/users`).then(
@@ -102,15 +103,15 @@ const router = createBrowserRouter([
           },
           {
             path: "adicionar",
-            element: <InfoPage create={true} target="usuario" />
+            element: <UserInfoPage create={true} target="usuario" />
           },
           {
             path: "remover",
-            element: <InfoPage delete={true} target="usuario" />
+            element: <UserInfoPage delete={true} target="usuario" />
           },
           {
             path: "atualizar",
-            element: <InfoPage update={true} target="usuario" />
+            element: <UserInfoPage update={true} target="usuario" />
           }
         ]
       },
@@ -119,19 +120,27 @@ const router = createBrowserRouter([
         children: [
           {
             path: "visualizar",
-            element: <ViewPage secao="Eventos" />
+            element: <ViewPage secao="Eventos" path='/main/eventos/visualizar'  />,
+            loader: async () => {
+              console.log(`Executando loader do view para eventos.`)
+              let res = await axios.get(`http://localhost:1000/events`).then(
+                (response) => {return response}
+              )
+              console.log(`\nNo index, res:\n${res}\n`)
+              return res
+            }
           },
           {
             path: "adicionar",
-            element: <WIP page="eventos/adicionar" />
+            element: <EventInfoPage create={true} target="evento" />
           },
           {
             path: "remover",
-            element: <WIP page="eventos/remover" />
+            element: <EventInfoPage delete={true} target="evento" />
           },
           {
             path: "atualizar",
-            element: <WIP page="eventos/atualizar" />
+            element: <EventInfoPage update={true} target="evento" />
           }
         ]
       },
