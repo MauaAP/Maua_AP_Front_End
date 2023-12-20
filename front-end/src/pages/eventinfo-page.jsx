@@ -59,7 +59,7 @@ export default function EventInfoPage (props){
             .then((response) => {
                 // console.log('No then:')
                 console.log(response.data)
-                setEventInfo(response.data)
+                setEventInfo(response.data[0])
             })
         }
     }

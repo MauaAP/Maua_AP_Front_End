@@ -51,6 +51,17 @@ export default function UserInfoPage (props){
         setUserInfo(newUserInfo);
         // console.log(`${name} // ${value}`)
     };
+
+    function onCheckChange (event) {
+        let newUserInfo = {...userInfo};
+        newUserInfo['isProfessor'] = event.target.checked ? 1 : 0;
+        setUserInfo(newUserInfo)
+
+    }
+
+    // function setCheckValue () {
+    //     return userInfo['isProfessor'] ? true : false
+    // }
     
     async function onSearchClick (searchId) {
 
@@ -59,7 +70,7 @@ export default function UserInfoPage (props){
             .then((response) => {
                 // console.log('No then:')
                 // console.log(response.data)
-                setUserInfo(response.data)
+                setUserInfo(response.data[0])
             })
         } else {
             console.log('WIP')
@@ -116,8 +127,8 @@ export default function UserInfoPage (props){
                     <div className="container-fluid row my-2">
                         <div className="form-check col-3 fs-4 border-end border-black border-5 my-2">
                             <label className="form-check-label"  htmlFor="isProfessor">Sou professor</label>
-                            <input className="form-check-input" checked={userInfo.isProfessor} disabled={props.delete} onChange={onChange} name="isProfessor" type="checkbox" id="isProfessor" />
-                        </div>
+                            <input className="form-check-input"  disabled={props.delete} onChange={onCheckChange} checked={userInfo.isProfessor} name="isProfessor" type="checkbox" id="isProfessor" />
+                        </div>                                  
                         <div className="row col fs-4 my-2">
                             <label className="col-4 col-form-label fs-5" htmlFor="#numeroMatricula">Número matricula</label>
                             <div className="col-8">
